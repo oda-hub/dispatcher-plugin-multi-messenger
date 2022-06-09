@@ -1,0 +1,4 @@
+instruments:
+  multimessenger:
+    data_server_url: http://localhost:9292
+    dummy_cache: not-set-to-anything-useful
