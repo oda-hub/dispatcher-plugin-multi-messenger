@@ -80,11 +80,12 @@ class MMDataDispatcher:
             param_dict['_async_request_callback'] = call_back_url
             param_dict['_async_request'] = "yes"
 
-        # TODO: add dispatcher url to param_dict
+        param_dict['dispatcher_url'] = call_back_url.split('/call_back?')[0]
+        
         url = '/'.join([self.data_server_url.strip('/'), task.strip('/')])
         res = requests.get(url, params = param_dict)
         if res.status_code == 200:
-            if res.json()['data']['exceptions']: #failed nb execution in async 
+            if 'data' in res.json().keys() and res.json()['data']['exceptions']: #failed nb execution in async 
                 except_message = res.json()['data']['exceptions'][0]['ename']+': '+res.json()['data']['exceptions'][0]['evalue']
                 query_out.set_failed('Processing failed', 
                                      message=except_message)
