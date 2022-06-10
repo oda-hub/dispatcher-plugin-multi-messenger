@@ -108,4 +108,3 @@ class MMDataDispatcher:
             raise RuntimeError('Error in the backend')
 
         return res, query_out
-    # FIXME: exception in backend (papermill processing error) leads to infinite cycle of requests

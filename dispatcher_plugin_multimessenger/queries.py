@@ -11,7 +11,7 @@ class MMProductQuery(ProductQuery):
    
  
     def get_data_server_query(self, instrument, config=None, **kwargs):
-        param_dict = {'anal_par_csv': instrument.get_par_by_name('anal_par_csv')}
+        param_dict = {'anal_par_csv': instrument.get_par_by_name('anal_par_csv').value}
         return instrument.data_server_query_class(instrument=instrument,
                                                   config=config,
                                                   param_dict=param_dict,
@@ -26,7 +26,7 @@ class MMProductQuery(ProductQuery):
             _o_dict = res.json() 
         else:
             _o_dict = res.json()['data']
-        prod_list = [MultiInstrumentProduct(_o_dict)]
+        prod_list = [MultiInstrumentProduct(_o_dict['output'])]
         return prod_list
     
     def process_product_method(self, instrument, prod_list, api=False):
