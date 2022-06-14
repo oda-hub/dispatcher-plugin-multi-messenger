@@ -1,4 +1,3 @@
-from tokenize import Name
 from cdci_data_analysis.analysis.queries import ProductQuery, QueryOutput
 from cdci_data_analysis.analysis.parameters import Name
 
