@@ -80,7 +80,8 @@ class MMDataDispatcher:
             param_dict['_async_request_callback'] = call_back_url
             param_dict['_async_request'] = "yes"
 
-        param_dict['dispatcher_url'] = call_back_url.split('/call_back?')[0]
+        if task.strip('/').endswith('prodcombine'):
+            param_dict['dispatcher_url'] = call_back_url.split('/call_back?')[0]
         
         url = '/'.join([self.data_server_url.strip('/'), task.strip('/')])
         res = requests.get(url, params = param_dict)
