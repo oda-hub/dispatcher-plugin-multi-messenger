@@ -5,12 +5,12 @@ from .products import MultiInstrumentProduct
 
 class MMProductQuery(ProductQuery):
     def __init__(self, name):
-        anal_par_csv = Name(name='anal_par_csv')
-        super().__init__(name, parameters_list = [anal_par_csv])
+        anal_par_json = Name(name='anal_par_json')
+        super().__init__(name, parameters_list = [anal_par_json])
    
  
     def get_data_server_query(self, instrument, config=None, **kwargs):
-        param_dict = {'anal_par_csv': instrument.get_par_by_name('anal_par_csv').value}
+        param_dict = {'anal_par_json': instrument.get_par_by_name('anal_par_json').value}
         return instrument.data_server_query_class(instrument=instrument,
                                                   config=config,
                                                   param_dict=param_dict,
