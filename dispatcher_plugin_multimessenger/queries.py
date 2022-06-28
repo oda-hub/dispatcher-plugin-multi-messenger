@@ -78,6 +78,32 @@ class MMProposalQuery(ProductQuery):
         if api is True:
             raise NotImplementedError
         else:
-            query_out.prod_dictionary['proposition'] = prod['proposition']
+            combinations = prod['combinations']
+            
+            #only one possibility currently
+            if len(combinations) == 1:
+                proposition = { 
+                    'message': 'OK',
+                    'time': combinations[0],
+                    'energy': [],
+                    'space': [] 
+                }
+            elif len(combinations) == 0:
+                proposition = {
+                    'message': 'not possible',
+                    'time': [],
+                    'energy': [],
+                    'space': [],     
+                }
+            elif len(combinations) > 1:
+                proposition = {
+                    'message': 'not unique',
+                    'time': [],
+                    'energy': [],
+                    'space': [],     
+                }
+            
+            
+            query_out.prod_dictionary['proposition'] = proposition
 
         return query_out
