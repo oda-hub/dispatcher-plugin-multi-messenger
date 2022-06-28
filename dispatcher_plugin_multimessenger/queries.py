@@ -2,6 +2,7 @@ from cdci_data_analysis.analysis.queries import ProductQuery, QueryOutput
 from cdci_data_analysis.analysis.parameters import Name
 
 from .products import MultiInstrumentProduct
+from .schema import ProposalProduct
 
 class MMProductQuery(ProductQuery):
     def __init__(self, name):
@@ -79,32 +80,22 @@ class MMProposalQuery(ProductQuery):
         if api is True:
             raise NotImplementedError
         else:
-            combinations = prod['combinations']
             
-            #only one possibility currently
-            if len(combinations) == 1:
-                proposition = { 
-                    'message': 'OK',
-                    'time': combinations[0],
-                    'energy': [],
-                    'space': [] 
-                }
-            elif len(combinations) == 0:
-                proposition = {
-                    'message': 'not possible',
-                    'time': [],
-                    'energy': [],
-                    'space': [],     
-                }
-            elif len(combinations) > 1:
-                proposition = {
-                    'message': 'not unique',
-                    'time': [],
-                    'energy': [],
-                    'space': [],     
-                }
+            proposal = {'message': '',
+                        'propositions': []}
             
+            time_based = [x for x in prod['propositions'] if x['method'] == 'time']
+            energy_based = [x for x in prod['propositions'] if x['method'] == 'energy']
+            space_based = [x for x in prod['propositions'] if x['method'] == 'space']
             
-            query_out.prod_dictionary['proposition'] = proposition
-
+            if len(time_based) == 1:
+                proposal['propositions'].extend(time_based)    
+            if len(energy_based) == 1:
+                proposal['propositions'].extend(energy_based)
+            if len(space_based) == 1:
+                proposal['propositions'].extend(space_based)
+            
+            ProposalProduct().validate(proposal)
+            
+            query_out.prod_dictionary['proposal'] = proposal
         return query_out
