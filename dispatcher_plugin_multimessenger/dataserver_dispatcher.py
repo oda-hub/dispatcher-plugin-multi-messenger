@@ -7,12 +7,13 @@ import time
 from oda_api.api import DispatcherAPI
 
 class MMDataDispatcher:
-    def __init__(self, instrument=None, param_dict=None, task=None, config=None):
+    def __init__(self, instrument=None, param_dict=None, task=None, config=None, no_asynch=False):
         if config is None:
             config = DataServerConf.from_conf_dict(instrument.data_server_conf_dict)
         self.data_server_url = config.data_server_url
         self.task = task
         self.param_dict = param_dict
+        self.no_asynch = no_asynch
         
     def test_communication(self, max_trial=10, sleep_s=1, logger=None):
         print('--> start test connection')
@@ -76,7 +77,7 @@ class MMDataDispatcher:
         if param_dict is None:
             param_dict=self.param_dict   
         
-        if run_asynch:
+        if run_asynch and not self.no_asynch:
             param_dict['_async_request_callback'] = call_back_url
             param_dict['_async_request'] = "yes"
 
