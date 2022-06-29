@@ -2,7 +2,7 @@ from cdci_data_analysis.analysis.queries import ProductQuery, QueryOutput
 from cdci_data_analysis.analysis.parameters import Name
 
 from .products import MultiInstrumentProduct
-from .schema import ProposalProduct
+from .schema import PropositionsProduct
 
 class MMProductQuery(ProductQuery):
     def __init__(self, name):
@@ -95,7 +95,7 @@ class MMProposalQuery(ProductQuery):
             if len(space_based) == 1:
                 proposal['propositions'].extend(space_based)
             
-            ProposalProduct().validate(proposal)
+            PropositionsProduct().validate(proposal)
             
-            query_out.prod_dictionary['proposal'] = proposal
+            query_out.prod_dictionary['propositions_product'] = proposal
         return query_out

@@ -21,7 +21,7 @@ class Proposition(Schema):
     method = fields.String(validate=validate.OneOf(["time", "energy", "space"])) 
     combination = fields.List(ProductIndex())
 
-# returned as 'proposal' product    
-class ProposalProduct(Schema):
+# returned as 'propositions_product' product    
+class PropositionsProduct(Schema):
     message = fields.String()
     proposistions = fields.Nested(Proposition(), many=True)

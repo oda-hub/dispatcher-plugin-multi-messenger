@@ -4,4 +4,4 @@ class MultiInstrumentProduct:
         self.name = name
         
     def get_plot(self):
-        return self.product['image']
+        return self.product['bokeh_plot']
