@@ -59,8 +59,7 @@ class MMProposalQuery(ProductQuery):
                                                   config=config,
                                                   param_dict=param_dict,
                                                   task='/api/v1.0/get/propose',
-                                                  no_asynch = True)
-
+        )
     
     def build_product_list(self, instrument, res, out_dir, api=False):
         prod_list = []
