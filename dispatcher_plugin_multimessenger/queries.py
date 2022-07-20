@@ -2,6 +2,7 @@ from cdci_data_analysis.analysis.queries import ProductQuery, QueryOutput
 from cdci_data_analysis.analysis.parameters import Name
 
 from .products import MultiInstrumentProduct
+from .schema import PropositionsProduct
 
 class MMProductQuery(ProductQuery):
     def __init__(self, name):
@@ -58,7 +59,6 @@ class MMProposalQuery(ProductQuery):
                                                   config=config,
                                                   param_dict=param_dict,
                                                   task='/api/v1.0/get/propose')
-
     
     def build_product_list(self, instrument, res, out_dir, api=False):
         prod_list = []
@@ -78,6 +78,22 @@ class MMProposalQuery(ProductQuery):
         if api is True:
             raise NotImplementedError
         else:
-            query_out.prod_dictionary['proposition'] = prod['proposition']
-
+            
+            proposal = {'message': '',
+                        'propositions': []}
+            
+            time_based = [x for x in prod['propositions'] if x['method'] == 'time']
+            energy_based = [x for x in prod['propositions'] if x['method'] == 'energy']
+            space_based = [x for x in prod['propositions'] if x['method'] == 'space']
+            
+            if len(time_based) == 1:
+                proposal['propositions'].extend(time_based)    
+            if len(energy_based) == 1:
+                proposal['propositions'].extend(energy_based)
+            if len(space_based) == 1:
+                proposal['propositions'].extend(space_based)
+            
+            PropositionsProduct().validate(proposal)
+            
+            query_out.prod_dictionary['propositions_product'] = proposal
         return query_out
