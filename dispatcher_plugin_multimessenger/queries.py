@@ -58,8 +58,7 @@ class MMProposalQuery(ProductQuery):
         return instrument.data_server_query_class(instrument=instrument,
                                                   config=config,
                                                   param_dict=param_dict,
-                                                  task='/api/v1.0/get/propose',
-        )
+                                                  task='/api/v1.0/get/propose')
     
     def build_product_list(self, instrument, res, out_dir, api=False):
         prod_list = []
